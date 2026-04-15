@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Dev Bhodia — Engineer & Founder</title>
+<meta name="description" content="Dev Bhodia — Computer & Autonomous Systems Engineer, Founder of VANTAGE, embedded systems, AI, RF design."/>
+<meta property="og:title" content="Dev Bhodia — Engineer & Founder"/>
+<meta property="og:description" content="Portfolio of Dev Bhodia — AI startup founder, embedded systems engineer, and aerospace intern based in Dubai."/>
+<meta property="og:url" content="https://devbhodia.com"/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --black:#05080f;
+    --surface:#0c1118;
+    --surface2:#111820;
+    --border:rgba(255,255,255,0.07);
+    --border2:rgba(255,255,255,0.12);
+    --gold:#c9963e;
+    --gold-light:#e2b96f;
+    --gold-dim:rgba(201,150,62,0.12);
+    --text:#ede9e1;
+    --text2:#8c8fa8;
+    --text3:#5a5d72;
+    --mono:var(--text2);
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--black);
+    color:var(--text);
+    font-family:'DM Sans',sans-serif;
+    font-weight:300;
+    line-height:1.7;
+    overflow-x:hidden;
+    cursor:none;
+  }
+
+  /* CURSOR */
+  .cursor{
+    position:fixed;width:8px;height:8px;background:var(--gold);
+    border-radius:50%;pointer-events:none;z-index:9999;
+    transform:translate(-50%,-50%);transition:transform 0.1s;
+  }
+  .cursor-follower{
+    position:fixed;width:36px;height:36px;
+    border:1px solid rgba(201,150,62,0.4);border-radius:50%;
+    pointer-events:none;z-index:9998;
+    transform:translate(-50%,-50%);
+    transition:left 0.12s ease,top 0.12s ease,width 0.2s,height 0.2s,border-color 0.2s;
+  }
+
+  /* BACKGROUND GRID */
+  body::before{
+    content:'';position:fixed;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+    background-size:60px 60px;pointer-events:none;z-index:0;
+  }
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:1.5rem 4rem;
+    display:flex;align-items:center;justify-content:space-between;
+    transition:background 0.4s,backdrop-filter 0.4s,padding 0.3s;
+  }
+  nav.scrolled{
+    background:rgba(5,8,15,0.85);
+    backdrop-filter:blur(20px);
+    padding:1rem 4rem;
+    border-bottom:1px solid var(--border);
+  }
+  .nav-logo{
+    font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:500;
+    color:var(--text);text-decoration:none;letter-spacing:0.05em;
+  }
+  .nav-logo span{color:var(--gold)}
+  .nav-links{display:flex;gap:2.5rem;list-style:none}
+  .nav-links a{
+    font-size:0.8rem;letter-spacing:0.15em;text-transform:uppercase;
+    color:var(--text2);text-decoration:none;transition:color 0.2s;
+  }
+  .nav-links a:hover{color:var(--gold)}
+
+  /* SECTIONS */
+  section{position:relative;z-index:1}
+
+  /* HERO */
+  #hero{
+    min-height:100vh;display:flex;align-items:center;
+    padding:8rem 4rem 6rem;
+  }
+  .hero-inner{max-width:1200px;margin:0 auto;width:100%}
+  .hero-label{
+    font-family:'Space Mono',monospace;font-size:0.72rem;
+    letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;
+    margin-bottom:2rem;display:flex;align-items:center;gap:1rem;
+    opacity:0;animation:fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-label::before{content:'';width:40px;height:1px;background:var(--gold)}
+  .hero-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(4rem,9vw,9rem);
+    font-weight:300;line-height:0.95;letter-spacing:-0.02em;
+    opacity:0;animation:fadeUp 0.8s 0.4s forwards;
+  }
+  .hero-name em{font-style:italic;color:var(--gold)}
+  .hero-tagline{
+    margin-top:2rem;
+    font-size:clamp(1rem,1.8vw,1.2rem);
+    color:var(--text2);font-weight:300;
+    display:flex;align-items:center;gap:0.5rem;
+    opacity:0;animation:fadeUp 0.8s 0.6s forwards;
+  }
+  .tagline-word{
+    color:var(--text);font-weight:400;
+    overflow:hidden;display:inline-block;
+  }
+  .hero-desc{
+    max-width:520px;margin-top:2.5rem;
+    font-size:1rem;color:var(--text2);line-height:1.8;
+    opacity:0;animation:fadeUp 0.8s 0.8s forwards;
+  }
+  .hero-cta{
+    margin-top:3rem;display:flex;gap:1.5rem;align-items:center;
+    opacity:0;animation:fadeUp 0.8s 1s forwards;
+  }
+  .btn-primary{
+    padding:0.85rem 2.2rem;background:var(--gold);color:#0a0b0d;
+    font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;
+    letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;
+    transition:background 0.2s,transform 0.2s;display:inline-block;
+  }
+  .btn-primary:hover{background:var(--gold-light);transform:translateY(-2px)}
+  .btn-ghost{
+    font-size:0.82rem;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--text2);text-decoration:none;
+    border-bottom:1px solid var(--border2);padding-bottom:2px;
+    transition:color 0.2s,border-color 0.2s;
+  }
+  .btn-ghost:hover{color:var(--text);border-color:var(--text)}
+  .hero-scroll{
+    position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
+    display:flex;flex-direction:column;align-items:center;gap:0.5rem;
+    opacity:0;animation:fadeUp 0.8s 1.2s forwards;
+  }
+  .hero-scroll span{
+    font-family:'Space Mono',monospace;font-size:0.65rem;
+    letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;
+  }
+  .scroll-line{
+    width:1px;height:60px;background:linear-gradient(var(--gold),transparent);
+    animation:scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ABOUT */
+  #about{padding:8rem 4rem}
+  .section-inner{max-width:1200px;margin:0 auto}
+  .section-header{
+    display:flex;align-items:center;gap:2rem;margin-bottom:5rem;
+  }
+  .section-num{
+    font-family:'Space Mono',monospace;font-size:0.72rem;
+    color:var(--gold);letter-spacing:0.2em;
+  }
+  .section-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;
+  }
+  .section-line{flex:1;height:1px;background:var(--border)}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+  .about-text p{
+    font-size:1.05rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.9;
+  }
+  .about-text p strong{color:var(--text);font-weight:400}
+  .about-facts{display:flex;flex-direction:column;gap:0}
+  .fact{
+    padding:1.5rem 0;border-bottom:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:baseline;
+  }
+  .fact-label{
+    font-family:'Space Mono',monospace;font-size:0.7rem;
+    letter-spacing:0.15em;color:var(--text3);text-transform:uppercase;
+  }
+  .fact-value{font-size:0.95rem;color:var(--text2);text-align:right}
+
+  /* EXPERIENCE */
+  #experience{padding:8rem 4rem;background:var(--surface)}
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{
+    content:'';position:absolute;left:0;top:0;bottom:0;
+    width:1px;background:var(--border2);
+  }
+  .timeline-item{
+    position:relative;margin-bottom:4rem;padding-left:3rem;
+    opacity:0;transform:translateX(-20px);
+    transition:opacity 0.6s,transform 0.6s;
+  }
+  .timeline-item.visible{opacity:1;transform:none}
+  .timeline-dot{
+    position:absolute;left:-2rem;top:0.35rem;
+    width:10px;height:10px;background:var(--black);
+    border:2px solid var(--border2);border-radius:50%;
+    transform:translateX(-4px);transition:border-color 0.3s,background 0.3s;
+  }
+  .timeline-item:hover .timeline-dot{
+    border-color:var(--gold);background:var(--gold);
+  }
+  .timeline-meta{
+    font-family:'Space Mono',monospace;font-size:0.65rem;
+    letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;
+    margin-bottom:0.5rem;
+  }
+  .timeline-role{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem;font-weight:400;margin-bottom:0.3rem;
+  }
+  .timeline-org{font-size:0.9rem;color:var(--text2);margin-bottom:1rem}
+  .timeline-desc{
+    font-size:0.9rem;color:var(--text3);line-height:1.8;max-width:600px;
+  }
+
+  /* PROJECTS */
+  #projects{padding:8rem 4rem}
+  .projects-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:2px;
+  }
+  .project-card{
+    background:var(--surface);padding:3rem;
+    border:1px solid var(--border);
+    position:relative;overflow:hidden;
+    transition:border-color 0.3s;
+    opacity:0;transform:translateY(24px);
+    transition:opacity 0.6s,transform 0.6s,border-color 0.3s;
+  }
+  .project-card.visible{opacity:1;transform:none}
+  .project-card::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(135deg,var(--gold-dim),transparent);
+    opacity:0;transition:opacity 0.4s;
+  }
+  .project-card:hover{border-color:rgba(201,150,62,0.3)}
+  .project-card:hover::before{opacity:1}
+  .project-card:nth-child(1){transition-delay:0s}
+  .project-card:nth-child(2){transition-delay:0.1s}
+  .project-card:nth-child(3){transition-delay:0.2s}
+  .project-card:nth-child(4){transition-delay:0.3s}
+  .project-num{
+    font-family:'Space Mono',monospace;font-size:0.65rem;
+    color:var(--gold);letter-spacing:0.2em;margin-bottom:1.5rem;
+    display:block;
+  }
+  .project-name{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.8rem;font-weight:400;margin-bottom:0.5rem;
+    line-height:1.1;
+  }
+  .project-context{
+    font-size:0.78rem;color:var(--gold);letter-spacing:0.1em;
+    text-transform:uppercase;margin-bottom:1.2rem;
+  }
+  .project-desc{font-size:0.88rem;color:var(--text3);line-height:1.8}
+  .project-tags{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem}
+  .tag{
+    font-family:'Space Mono',monospace;font-size:0.6rem;
+    letter-spacing:0.1em;color:var(--text3);text-transform:uppercase;
+    padding:0.3rem 0.8rem;border:1px solid var(--border2);
+  }
+  .tag.featured{color:var(--gold);border-color:rgba(201,150,62,0.3)}
+  .project-featured{
+    position:absolute;top:1.5rem;right:1.5rem;
+    font-family:'Space Mono',monospace;font-size:0.58rem;
+    letter-spacing:0.15em;color:var(--gold);text-transform:uppercase;
+    padding:0.3rem 0.8rem;border:1px solid rgba(201,150,62,0.3);
+  }
+
+  /* SKILLS */
+  #skills{padding:8rem 4rem;background:var(--surface)}
+  .skills-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;
+  }
+  .skill-group{}
+  .skill-group-title{
+    font-family:'Space Mono',monospace;font-size:0.68rem;
+    letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;
+    margin-bottom:1.5rem;padding-bottom:1rem;
+    border-bottom:1px solid var(--border);
+  }
+  .skill-list{display:flex;flex-direction:column;gap:0.8rem}
+  .skill-item{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:0.88rem;color:var(--text2);
+    opacity:0;transform:translateX(-10px);
+    transition:opacity 0.5s,transform 0.5s;
+  }
+  .skill-item.visible{opacity:1;transform:none}
+  .skill-bar{
+    width:80px;height:1px;background:var(--border2);
+    position:relative;overflow:hidden;
+  }
+  .skill-bar-fill{
+    position:absolute;top:0;left:0;height:100%;
+    background:var(--gold);width:0;
+    transition:width 1s ease 0.3s;
+  }
+  .skill-item.visible .skill-bar-fill{width:var(--w)}
+
+  /* CONTACT */
+  #contact{padding:10rem 4rem}
+  .contact-inner{max-width:700px;margin:0 auto;text-align:center}
+  .contact-eyebrow{
+    font-family:'Space Mono',monospace;font-size:0.7rem;
+    letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;
+    margin-bottom:1.5rem;
+  }
+  .contact-heading{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(3rem,6vw,5.5rem);font-weight:300;
+    line-height:0.95;margin-bottom:2rem;
+  }
+  .contact-heading em{font-style:italic;color:var(--gold)}
+  .contact-sub{
+    font-size:1rem;color:var(--text2);margin-bottom:3rem;max-width:480px;margin-left:auto;margin-right:auto;
+  }
+  .contact-links{
+    display:flex;justify-content:center;gap:3rem;
+    flex-wrap:wrap;margin-bottom:4rem;
+  }
+  .contact-link{
+    display:flex;flex-direction:column;gap:0.4rem;text-decoration:none;
+    transition:transform 0.2s;
+  }
+  .contact-link:hover{transform:translateY(-4px)}
+  .contact-link-label{
+    font-family:'Space Mono',monospace;font-size:0.6rem;
+    letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;
+  }
+  .contact-link-value{font-size:0.9rem;color:var(--text2);transition:color 0.2s}
+  .contact-link:hover .contact-link-value{color:var(--gold)}
+
+  /* FOOTER */
+  footer{
+    padding:2rem 4rem;border-top:1px solid var(--border);
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .footer-copy{
+    font-family:'Space Mono',monospace;font-size:0.65rem;
+    color:var(--text3);letter-spacing:0.1em;
+  }
+  .footer-badge{
+    font-family:'Space Mono',monospace;font-size:0.65rem;
+    color:var(--text3);letter-spacing:0.1em;display:flex;align-items:center;gap:0.5rem;
+  }
+  .badge-dot{width:6px;height:6px;background:#22c55e;border-radius:50%;animation:blink 2s ease-in-out infinite}
+
+  /* ANIMATIONS */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  @keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(0.8)}50%{opacity:1;transform:scaleY(1)}}
+  @keyframes blink{0%,100%{opacity:0.5}50%{opacity:1}}
+  @keyframes typeIn{from{width:0}to{width:100%}}
+
+  /* RESPONSIVE */
+  @media(max-width:900px){
+    nav{padding:1.2rem 2rem}
+    nav.scrolled{padding:0.8rem 2rem}
+    #hero,#about,#experience,#projects,#skills,#contact{padding-left:2rem;padding-right:2rem}
+    footer{padding:1.5rem 2rem}
+    .about-grid{grid-template-columns:1fr}
+    .projects-grid{grid-template-columns:1fr}
+    .skills-grid{grid-template-columns:1fr 1fr}
+    .nav-links{gap:1.5rem}
+    .hero-name{font-size:clamp(3rem,12vw,5rem)}
+  }
+  @media(max-width:600px){
+    .nav-links{display:none}
+    .skills-grid{grid-template-columns:1fr}
+    .contact-links{gap:2rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="follower"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">Dev<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-label">Dubai, UAE — Engineer & Founder</div>
+    <h1 class="hero-name">Dev<br/><em>Bhodia</em></h1>
+    <p class="hero-tagline">
+      <span id="tagline-prefix">Currently —&nbsp;</span>
+      <span class="tagline-word" id="tagline-rotating">Founder</span>
+    </p>
+    <p class="hero-desc">
+      Computer &amp; Autonomous Systems Engineer. Building AI-powered assistive technology
+      for the blind. Embedded systems, aerospace, RF design.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">View Work</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a <strong>Computer and Autonomous Systems Engineering</strong> student at UOWD, graduating June 2027. My work sits at the intersection of hardware and AI — from CubeSat avionics to wearable assistive technology.</p>
+        <p>I founded <strong>VANTAGE</strong>, an AI-driven assistive tech startup for the blind, incubated at <strong>Expo Changemakers Academy</strong> with grant funding from Expo City Dubai, and recognised in Khaleej Times.</p>
+        <p>Across internships in <strong>aerospace, antenna engineering</strong>, and <strong>design thinking</strong>, I've built real systems — not just simulations. I'm multilingual, and I care about building technology that genuinely matters.</p>
+      </div>
+      <div class="about-facts reveal">
+        <div class="fact">
+          <span class="fact-label">Degree</span>
+          <span class="fact-value">BEng. Computer &amp; Autonomous Systems</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">University</span>
+          <span class="fact-value">UOWD, Dubai</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Graduating</span>
+          <span class="fact-value">June 2027</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Focus Areas</span>
+          <span class="fact-value">AI / Embedded / RF / Aerospace</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Email</span>
+          <span class="fact-value">devbhodia17@gmail.com</span>
+        </div>
+        <div class="fact">
+          <span class="fact-label">Press</span>
+          <span class="fact-value">Khaleej Times</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Apr 2025 — Present · Dubai</div>
+        <div class="timeline-role">Founder &amp; Lead Engineer</div>
+        <div class="timeline-org">VANTAGE — AI Assistive Tech Startup</div>
+        <div class="timeline-desc">Founded an AI-driven assistive tech company for the blind. Incubated at Expo Changemakers Academy with grant funding from Expo City. Led end-to-end hardware, software, and AI development. Featured in Khaleej Times.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Jul 2025 — Present · Dubai</div>
+        <div class="timeline-role">Embedded Systems Engineering Intern</div>
+        <div class="timeline-org">SpacePoint</div>
+        <div class="timeline-desc">FPGA/MCU integration for aerospace and advanced computing projects. PCB fabrication and testing. Contributing to the CDHS subsystem for CubeSat missions including avionics software and subsystem validation.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Jun 2025 — Present · Dubai</div>
+        <div class="timeline-role">Antenna Engineer Intern</div>
+        <div class="timeline-org">University of Wollongong in Dubai</div>
+        <div class="timeline-desc">Designed and simulated antenna systems for wireless communication. Applied RF design principles to optimise signal efficiency. Full-wave EM simulation and wearable antenna fabrication for biomedical applications.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">May — Jun 2025 · Dubai</div>
+        <div class="timeline-role">Design Thinking Trainee</div>
+        <div class="timeline-org">Lumi.Network (Stanford-affiliated)</div>
+        <div class="timeline-desc">Completed Stanford-affiliated Design Thinking programme with Distinction. Developed SereneAid — an AI wellness app for paramedic burnout. Designed and tested full UI prototype in Figma, applying human-AI interaction principles.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Oct 2024 — Present · Dubai</div>
+        <div class="timeline-role">Engineering Peer Tutor</div>
+        <div class="timeline-org">University of Wollongong in Dubai</div>
+        <div class="timeline-desc">Mentoring students in engineering concepts and problem-solving. Facilitating collaborative learning and strengthening practical lab skills across cohorts.</div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-meta">Aug 2025 · Dubai</div>
+        <div class="timeline-role">Intern</div>
+        <div class="timeline-org">Nikon Youth &amp; Kids School</div>
+        <div class="timeline-desc">Assisted in organising youth photography workshops. Enhanced creativity, visual communication, and event organisation skills.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-featured">Featured · Khaleej Times</div>
+        <span class="project-num">01</span>
+        <div class="project-name">Vantage V01</div>
+        <div class="project-context">Expo Changemakers Academy · Grant Funded</div>
+        <div class="project-desc">VR-inspired wearable providing spatial awareness, obstacle detection, and real-time text recognition for blind users. Integrates LiDAR, ultrasonic sensors, computer vision, and vibration haptic feedback into a single wearable device.</div>
+        <div class="project-tags">
+          <span class="tag featured">LiDAR</span>
+          <span class="tag featured">AI / CV</span>
+          <span class="tag">Embedded</span>
+          <span class="tag">Haptics</span>
+          <span class="tag">Python</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-num">02</span>
+        <div class="project-name">CubeSat CDHS Subsystem</div>
+        <div class="project-context">SpacePoint · Aerospace</div>
+        <div class="project-desc">Contributed to the Command and Data Handling Subsystem for cubesatellite missions. FPGA/MCU integration, avionics software development, and subsystem-level testing. Set for fabrication and flight validation.</div>
+        <div class="project-tags">
+          <span class="tag featured">FPGA</span>
+          <span class="tag featured">Avionics</span>
+          <span class="tag">MCU</span>
+          <span class="tag">Aerospace</span>
+          <span class="tag">MATLAB</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-num">03</span>
+        <div class="project-name">SereneAid</div>
+        <div class="project-context">Lumi.Network · Distinction</div>
+        <div class="project-desc">AI-driven wellness app designed to detect and address burnout in paramedics. Monitors mental health indicators and provides personalised interventions. Full UI prototype in Figma. Achieved Distinction in programme evaluation.</div>
+        <div class="project-tags">
+          <span class="tag featured">AI/ML</span>
+          <span class="tag featured">Figma</span>
+          <span class="tag">UX Design</span>
+          <span class="tag">Health Tech</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-num">04</span>
+        <div class="project-name">Wearable Antenna</div>
+        <div class="project-context">UOWD Internship · RF Engineering</div>
+        <div class="project-desc">Designed and tested a wearable antenna for biomedical and wireless communication applications. Full-wave electromagnetic simulation to evaluate performance. Iterative optimisation through simulation cycles, fabricated for testing.</div>
+        <div class="project-tags">
+          <span class="tag featured">RF Design</span>
+          <span class="tag featured">EM Simulation</span>
+          <span class="tag">KiCAD</span>
+          <span class="tag">Biomedical</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Hardware</div>
+        <div class="skill-list">
+          <div class="skill-item" style="--w:90%">
+            <span>Embedded Systems</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:80%">
+            <span>FPGA Design</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:85%">
+            <span>RF &amp; Antenna Design</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:80%">
+            <span>PCB Design (KiCAD)</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:75%">
+            <span>Signal Processing</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Software & AI</div>
+        <div class="skill-list">
+          <div class="skill-item" style="--w:85%">
+            <span>Python</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:80%">
+            <span>MATLAB</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:80%">
+            <span>AI / ML</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:70%">
+            <span>Computer Vision</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:75%">
+            <span>Multisim</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title">Design & Leadership</div>
+        <div class="skill-list">
+          <div class="skill-item" style="--w:85%">
+            <span>Figma / UX Design</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:90%">
+            <span>Design Thinking</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:85%">
+            <span>Team Leadership</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:80%">
+            <span>Technical Writing</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+          <div class="skill-item" style="--w:90%">
+            <span>Multilingual</span>
+            <div class="skill-bar"><div class="skill-bar-fill"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-inner">
+      <div class="contact-eyebrow reveal">05 — Let's Connect</div>
+      <h2 class="contact-heading reveal">Let's build<br/>something<br/><em>real.</em></h2>
+      <p class="contact-sub reveal">Open to collaborations, internships, research opportunities, and conversations about technology that matters.</p>
+      <div class="contact-links reveal">
+        <a href="mailto:devbhodia17@gmail.com" class="contact-link">
+          <span class="contact-link-label">Email</span>
+          <span class="contact-link-value">devbhodia17@gmail.com</span>
+        </a>
+        <a href="tel:+971557857806" class="contact-link">
+          <span class="contact-link-label">Phone</span>
+          <span class="contact-link-value">+971 55 785 7806</span>
+        </a>
+        <a href="https://linkedin.com/in/devbhodia" target="_blank" rel="noopener" class="contact-link">
+          <span class="contact-link-label">LinkedIn</span>
+          <span class="contact-link-value">in/devbhodia</span>
+        </a>
+      </div>
+      <a href="mailto:devbhodia17@gmail.com" class="btn-primary reveal">Send a Message</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2025 Dev Bhodia. All rights reserved.</span>
+  <span class="footer-badge">
+    <span class="badge-dot"></span>
+    Available for opportunities
+  </span>
+</footer>
+
+<script>
+  // Cursor
+  const cursor=document.getElementById('cursor');
+  const follower=document.getElementById('follower');
+  let fx=0,fy=0;
+  document.addEventListener('mousemove',e=>{
+    cursor.style.left=e.clientX+'px';
+    cursor.style.top=e.clientY+'px';
+    fx+=(e.clientX-fx)*0.15;
+    fy+=(e.clientY-fy)*0.15;
+    follower.style.left=e.clientX+'px';
+    follower.style.top=e.clientY+'px';
+  });
+  document.querySelectorAll('a,button').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{
+      follower.style.width='54px';follower.style.height='54px';
+      follower.style.borderColor='rgba(201,150,62,0.7)';
+    });
+    el.addEventListener('mouseleave',()=>{
+      follower.style.width='36px';follower.style.height='36px';
+      follower.style.borderColor='rgba(201,150,62,0.4)';
+    });
+  });
+
+  // Nav scroll
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{
+    nav.classList.toggle('scrolled',window.scrollY>60);
+  });
+
+  // Tagline rotator
+  const words=['Founder','Engineer','Builder','Researcher','Innovator'];
+  let wi=0;
+  const el=document.getElementById('tagline-rotating');
+  function rotate(){
+    el.style.opacity='0';el.style.transform='translateY(8px)';
+    el.style.transition='opacity 0.3s,transform 0.3s';
+    setTimeout(()=>{
+      wi=(wi+1)%words.length;
+      el.textContent=words[wi];
+      el.style.opacity='1';el.style.transform='none';
+    },320);
+  }
+  setInterval(rotate,2200);
+
+  // Reveal on scroll
+  const revealEls=document.querySelectorAll('.reveal,.timeline-item,.project-card,.skill-item');
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach((entry,i)=>{
+      if(entry.isIntersecting){
+        const el=entry.target;
+        if(el.classList.contains('skill-item')){
+          const siblings=[...el.parentElement.children];
+          const idx=siblings.indexOf(el);
+          setTimeout(()=>el.classList.add('visible'),idx*80);
+        } else {
+          el.classList.add('visible');
+        }
+        obs.unobserve(el);
+      }
+    });
+  },{threshold:0.12});
+  revealEls.forEach(el=>{
+    if(!el.classList.contains('timeline-item')&&!el.classList.contains('project-card')&&!el.classList.contains('skill-item')){
+      el.style.opacity='0';el.style.transform='translateY(20px)';
+      el.style.transition='opacity 0.7s,transform 0.7s';
+      el.classList.add('needs-reveal');
+    }
+    obs.observe(el);
+  });
+  document.querySelectorAll('.needs-reveal').forEach(el=>{
+    const orig=el.style.transition;
+    new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.style.opacity='1';
+          e.target.style.transform='none';
+        }
+      });
+    },{threshold:0.1}).observe(el);
+  });
+</script>
+</body>
+</html>
